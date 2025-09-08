@@ -1,0 +1,133 @@
+M$ModelName = "ExoticMuons";
+
+M$Information = {
+  Authors      -> {"A. Greljo", "A. Palavric", "M. Tunja", "J. Zupan"}, 
+  Version      -> "0.1",
+  Date         -> "2025.",
+  Institutions -> {"University of Basel", "University of Sarajevo", "University of Cincinnati"},
+  Emails       -> {"admir.greljo@unibas.ch"}};
+
+M$InteractionOrderHierarchy = {
+  {NP1, 1},
+  {NP2, 1},
+  {NP3, 1},
+  {NP, 1}
+};
+
+M$ClassesDescription = {
+  F[7] == {
+    ClassName        -> mu,
+    SelfConjugate    -> False,
+    Mass             -> {Mmu,0.10566},
+    Width            -> {Wmu, 0.0001},
+    ParticleName     -> "mu-",
+    AntiParticleName -> "mu+",
+    PDG              -> 13
+  },
+  S[4] == { 
+    ClassName       -> S, 
+    SelfConjugate   -> True,  
+    Mass            -> {MS, 0.02},  
+    Width           -> {WS, 0.0001},
+    ParticleName    -> "S"
+  },
+  F[8] == {
+    ClassName        -> e,
+    SelfConjugate    -> False,
+    Mass             -> {Me,5.11*10^-4},
+    Width            -> 0,
+    ParticleName     -> "e-",
+    AntiParticleName -> "e+",
+    PDG              -> 11
+  }
+};
+
+
+M$Parameters = {
+
+  alpha == { 
+    ParameterType    -> External,
+    Value            -> 1/137.036,
+    InteractionOrder -> {QED,2},
+    Description      -> "Alpha constant"
+  },
+
+  Lambda == { 
+    ParameterType    -> External,
+    Value            -> 10^(6),
+    InteractionOrder -> {NP,0},
+    Description      -> "scale"
+  },
+
+  c1mue == { 
+    ParameterType    -> External,
+    Value            -> 0.10566,
+    InteractionOrder -> {NP1,1},
+    Description      -> "coefficient for 1 scalars"
+  },
+
+  c1emu == { 
+    ParameterType    -> External,
+    Value            -> 0.10566,
+    InteractionOrder -> {NP1,1},
+    Description      -> "coefficient for 1 scalars"
+  },
+
+  c2mue == { 
+    ParameterType    -> External,
+    Value            -> 0.10566,
+    InteractionOrder -> {NP2,1},
+    Description      -> "2-1 coefficient for 2 scalars"
+  },
+
+  c2emu == { 
+    ParameterType    -> External,
+    Value            -> 0.10566,
+    InteractionOrder -> {NP2,1},
+    Description      -> "1-2 coefficient for 2 scalars"
+  },
+
+  c3mue == { 
+    ParameterType    -> External,
+    Value            -> 0.10566,
+    InteractionOrder -> {NP3,1},
+    Description      -> "coefficient for 3 scalars"
+  },
+
+  c3emu == { 
+    ParameterType    -> External,
+    Value            -> 0.10566,
+    InteractionOrder -> {NP3,1},
+    Description      -> "coefficient for 3 scalars"
+  },
+
+  cSee == { 
+    ParameterType    -> External,
+    Value            -> 10^(-4),
+    InteractionOrder -> {NP,1},
+    Description      -> "Scalar and two electrons"
+  },
+
+  aS == { 
+    ParameterType    -> External,
+    BlockName        -> SMINPUTS,
+    OrderBlock       -> 3,
+    Value            -> 0.1184, 
+    InteractionOrder -> {QCD,2},
+    TeX              -> Subscript[\[Alpha],s],
+    Description      -> "Strong coupling constant at the Z pole"
+  }
+
+};
+
+LS1 := c1mue/Lambda mubar.ProjP.e S + c1emu/Lambda ebar.ProjP.mu S + HC[c1mue/Lambda mubar.ProjP.e S + c1emu/Lambda ebar.ProjP.mu S]
+
+LS2 := c2mue/Lambda^2 mubar.ProjP.e S^2 + c2emu/Lambda^2 ebar.ProjP.mu S^2 + HC[c2mue/Lambda^2 mubar.ProjP.e S^2 + c2emu/Lambda^2 ebar.ProjP.mu S^2]
+
+LS3 := c3mue/Lambda^3 mubar.ProjP.e S^3 + c3emu/Lambda^3 ebar.ProjP.mu S^3 + HC[c3mue/Lambda^3 mubar.ProjP.e S^3 + c3emu/Lambda^3 ebar.ProjP.mu S^3] 
+
+Lee := cSee ebar.e S
+
+L := LS1 + LS2+ LS3 + Lee
+
+
