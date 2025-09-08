@@ -1,0 +1,43 @@
+set auto_convert_model T
+
+import model EXOTICMUONS_UFO
+
+#NP1 - model with 1 scalar
+
+#NP2 - model with 2 scalars
+
+#NP3 - model with 3 scalars
+
+generate mu+ > e+ e- e+ e- e+ e- e+  NP1 = 0 NP2 = 0 NP3 = 1
+
+#generate mu+ > e+ e- e+ e- e+  NP1 = 0 NP2 = 1 NP3 = 0
+
+#generate mu+ > e+ e- e+  NP1 = 1 NP2 = 0 NP3 = 0
+
+output programS3
+
+launch
+
+#scalar width:
+set width 9000001 auto
+
+set nevents 10000
+
+#scalar mass
+set MS 0.02
+set run_tag 0.02
+
+#scale Lambda
+set Lambda 10000
+
+#c = yukawa_mu h_vev / Sqrt(2) = m_mu in our paper
+set c3mue 0.10566
+set c3emu 0.10566
+
+display processes
+
+display diagrams
+
+display particles
+
+#open index.html
